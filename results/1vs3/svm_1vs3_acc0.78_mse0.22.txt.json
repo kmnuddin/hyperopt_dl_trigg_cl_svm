@@ -1,0 +1,10 @@
+{
+    "C": 71.53098599475592,
+    "acc": 0.78,
+    "degree": 1,
+    "gamma": "scale",
+    "kernel": "rbf",
+    "loss": -0.78,
+    "mse": 0.22,
+    "status": "ok"
+}

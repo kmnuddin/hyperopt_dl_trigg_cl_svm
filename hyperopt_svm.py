@@ -1,11 +1,11 @@
-import numpy as np
-import pandas as pd
-from sklearn.metrics import accuracy_score, mean_squared_error
+from sklearn.metrics import accuracy_score, mean_squared_error, classification_report
 from sklearn.svm import SVC
 
 from bson import json_util
 import json
 import os
+import pickle
+from hyperopt import STATUS_OK
 
 RESULTS_DIR = "results/"
 
@@ -31,8 +31,9 @@ def run_svm(args):
 
     acc = accuracy_score(y_pred, y_test)
     mse = mean_squared_error(y_test, y_pred)
+    cr = classification_report(y_test, y_pred)
 
-    model_name = 'svm_{}_acc{}_mse{}'.format(data_type, str(acc), str(mse))
+    model_name = 'svm_{}_acc{}_{}'.format(data_type, str(acc), str(data_type))
 
     results = {
         'loss': -acc,
@@ -43,12 +44,14 @@ def run_svm(args):
         'gamma': gamma,
 
         'acc': acc,
-        'mse': mse
+        'mse': mse,
+        'status': STATUS_OK
     }
     print_json(results)
-    save_json_result(model_name, results)
+#     save_json_result(model_name, results)
+    pickle.dump(svc, open('models/{}.pkl'.format(model_name), 'wb'))
 
-    return results
+    return results, svc, cr
 
 
 def save_json_result(model_name, result):
