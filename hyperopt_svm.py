@@ -43,15 +43,16 @@ def run_svm(args):
         'degree': degree,
         'gamma': gamma,
 
+        'cr': cr,
         'acc': acc,
         'mse': mse,
         'status': STATUS_OK
     }
     print_json(results)
-#     save_json_result(model_name, results)
+    save_json_result(model_name, results)
     pickle.dump(svc, open('models/{}.pkl'.format(model_name), 'wb'))
 
-    return results, svc, cr
+    return results
 
 
 def save_json_result(model_name, result):

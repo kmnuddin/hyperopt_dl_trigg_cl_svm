@@ -10,8 +10,8 @@ import pickle
 import os
 import traceback
 
-data = pd.read_csv("data_15vs3/data.csv", header=None).values
-labels = np.ravel(pd.read_csv("data_15vs3/labels.csv", header=None).values)
+data = pd.read_csv("data_RT_100/data_bp_RT_100.csv", header=None).values
+labels = np.ravel(pd.read_csv("data_RT_100/labels_RT_100.csv", header=None).values)
 
 scaler = MinMaxScaler()
 
@@ -23,7 +23,7 @@ x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.33
 
 space = {
     'data': {
-        'type': '15vs3',
+        'type': 'RT',
 
         'x_train': x_train,
         'x_test': x_test,
@@ -34,7 +34,7 @@ space = {
         'C': hp.lognormal('C', 0,1),
         'kernel': hp.choice('kernel', ['rbf','poly', 'linear', 'sigmoid']),
         'degree': hp.choice('degree', range(1,15)),
-        'gamma': hp.choice('gamma', ['scale', 'auto'])
+        'gamma': hp.uniform('gamma',1e-5, 1e5)
     }
 }
 
@@ -43,7 +43,7 @@ def run_trial():
     max_evals = nb_evals = 1
 
     try:
-        trials = pickle.load(open("results_15vs3.pkl", "rb"))
+        trials = pickle.load(open("results_RT_100.pkl", "rb"))
         print("Found saved Trials! Loading...")
         max_evals = len(trials.trials) + nb_evals
         print("Rerunning from {} trials to add another one.".format(
@@ -56,7 +56,7 @@ def run_trial():
     print("\nSTARTED OPTIMIZATION STEP.\n")
     best = fmin(run_svm, space, algo=tpe.suggest, trials=trials, max_evals=max_evals)
 
-    pickle.dump(trials, open("results_15vs3.pkl", "wb"))
+    pickle.dump(trials, open("results_RT_100.pkl", "wb"))
 
     print("\nOPTIMIZATION STEP COMPLETE.\n")
 

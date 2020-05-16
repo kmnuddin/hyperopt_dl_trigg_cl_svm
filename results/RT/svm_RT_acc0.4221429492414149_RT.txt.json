@@ -1,0 +1,11 @@
+{
+    "C": 0.38997617609350904,
+    "acc": 0.4221429492414149,
+    "cr": "              precision    recall  f1-score   support\n\n         0.0       0.64      0.21      0.31      6988\n         1.0       0.39      0.92      0.54      8225\n         3.0       0.57      0.10      0.17      8054\n\n    accuracy                           0.42     23267\n   macro avg       0.53      0.41      0.34     23267\nweighted avg       0.53      0.42      0.35     23267\n",
+    "degree": 9,
+    "gamma": "scale",
+    "kernel": "linear",
+    "loss": -0.4221429492414149,
+    "mse": 1.7568229681523186,
+    "status": "ok"
+}
